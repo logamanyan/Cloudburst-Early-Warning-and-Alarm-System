@@ -1,0 +1,350 @@
+/* ===========================================================
+   ISRO SPACE THEME — style.css
+   Dark navy/black with orange accents, glass cards
+   =========================================================== */
+
+:root{
+  --bg:#08121a;
+  --panel:#071018;
+  --card:#0b1720;
+  --muted:#98a9b8;
+  --accent:#ff8a00;   /* ISRO orange */
+  --accent-2:#00d1ff;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+  --shadow: 0 10px 28px rgba(0,0,0,0.6);
+  --radius:12px;
+  --text:#dbeeff;
+  --small:13px;
+}
+
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,#04060a 0%, #07121a 100%);color:var(--text);-webkit-font-smoothing:antialiased;}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:210px;padding:18px;background:linear-gradient(180deg,#061022,#05121a);border-right:1px solid rgba(255,255,255,0.03);
+  display:flex;flex-direction:column;gap:14px;z-index:50;
+}
+.logo{width:48px;height:48px;background:linear-gradient(45deg,#111820,#0b141a);border-radius:20px;display:flex;font-weight:800;color:var(--accent);font-size:12px;margin-bottom:6px}
+.brand-info .gov{font-size:12px;color:var(--muted)}
+.brand-info .app{font-size:13px;font-weight:700;margin-top:6px}
+
+/* nav */
+.nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.nav-link{color:var(--muted);padding:10px;border-radius:8px;text-decoration:none;cursor:pointer;font-weight:600;font-size:14px;display:flex;gap:10px;align-items:center}
+.nav-link:hover{background:rgba(255,255,255,0.02);color:var(--text)}
+.nav-link.active{background:linear-gradient(90deg, rgba(255,138,0,0.12), rgba(255,138,0,0.06));color:var(--text);border-left:4px solid var(--accent);padding-left:12px}
+
+/* footer */
+.sidebar-footer{margin-top:auto;color:var(--muted);font-size:12px}
+.status{display:flex;gap:8px;align-items:center}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dot.online{background:var(--accent-2)}
+
+/* MAIN layout */
+.main{margin-left:210px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+.left .title{font-size:20px;font-weight:800}
+.left .subtitle{font-size:12px;color:var(--muted);margin-top:4px}
+
+
+
+/* actions */
+.actions{display:flex;gap:8px;margin-left:12px}
+.btn{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+.btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.03)}
+
+/* content */
+.content{padding:18px 28px}
+.section{margin-top:18px}
+
+/* cards */
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.map-card{height:520px;padding:10px}
+.map{height:100%;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+
+/* nodes */
+.node-row{display:flex;gap:18px;flex-wrap:wrap}
+.node-card{flex:1;min-width:320px;padding:14px}
+.node-title{color:var(--accent);font-weight:800;margin-bottom:8px}
+.node-values{color:var(--muted);line-height:1.6;font-size:14px}
+
+/* charts */
+.section-charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.chart-card{padding:12px;height:320px}
+canvas{background:transparent;border-radius:8px}
+
+/* alerts */
+.alerts{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.alert-item{background:linear-gradient(180deg, rgba(255,138,0,0.04), rgba(255,138,0,0.02));padding:10px;border-radius:8px;border-left:4px solid var(--accent);color:#0b1012;font-weight:700}
+
+/* responsive */
+@media(max-width:1100px){
+  .section-charts{grid-template-columns:1fr}
+  .node-row{flex-direction:column}
+  .map-card{height:420px}
+}
+@media(max-width:700px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .marquee{min-width:unset}
+}
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+  background: #0b1720;
+  color: #dbeeff;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+}
+
+.btn.full {
+  width: 100%;
+  padding: 12px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff8a00, #ff4d00);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.summary-box {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.report-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+/* ======== PROFESSIONAL CONTINUOUS MARQUEE V2 ======== */
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(90deg,#021017,#07121a);
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+.marquee-track span {
+    margin-right: 50px;
+    font-weight: 700;
+    color: var(--accent-2);
+    font-size: 14px;
+}
+
+@keyframes marqueeScroll {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+/* ===========================================================
+   ISRO SPACE THEME — HISTORY PAGE
+   Clean, glass, dark navy UI for prediction report page
+   =========================================================== */
+
+:root{
+  --bg:#08121a;
+  --panel:#071018;
+  --card:#0b1720;
+  --muted:#98a9b8;
+  --accent:#ff8a00;   /* ISRO orange */
+  --accent-2:#00d1ff; /* ISRO neon blue */
+  --glass: rgba(255,255,255,0.03);
+  --shadow: 0 10px 28px rgba(0,0,0,0.6);
+  --radius:12px;
+  --text:#dbeeff;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  background:linear-gradient(180deg,#04060a 0%, #07121a 100%);
+  color:var(--text);
+  font-family:Inter,Segoe UI,Roboto,Arial;
+  -webkit-font-smoothing:antialiased;
+  padding:0;
+}
+
+/* ===========================================================
+   PAGE LAYOUT (history page doesn't use full sidebar)
+   =========================================================== */
+.main-container {
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:30px 20px;
+}
+
+/* ===========================================================
+   TITLE SECTION
+   =========================================================== */
+.header-title{
+    font-size:26px;
+    font-weight:800;
+    color:var(--accent);
+    margin-bottom:6px;
+}
+
+.header-sub{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:24px;
+}
+
+/* ===========================================================
+   GLASS CARD
+   =========================================================== */
+.card {
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin-bottom:26px;
+    backdrop-filter: blur(12px);
+}
+
+.card h3{
+    margin-bottom:14px;
+    color:var(--accent);
+    font-size:18px;
+    font-weight:700;
+}
+
+/* ===========================================================
+   INPUT STYLING
+   =========================================================== */
+label{
+    font-size:14px;
+    color:var(--muted);
+    font-weight:600;
+}
+
+.input{
+  width:100%;
+  padding:12px;
+  margin:8px 0 18px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.07);
+  background:#0b1720;
+  color:var(--text);
+  transition:0.3s;
+}
+
+.input:focus{
+    border-color:var(--accent);
+    outline:none;
+}
+
+/* ===========================================================
+   BUTTON
+   =========================================================== */
+.btn{
+    width:100%;
+    padding:12px;
+    background:linear-gradient(90deg,#ff8a00,#ff4d00);
+    border:none;
+    border-radius:8px;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    color:white;
+    transition:0.3s;
+}
+
+.btn:hover{
+    filter:brightness(1.15);
+}
+
+/* ===========================================================
+   SUMMARY BOX
+   =========================================================== */
+.summary-box{
+    font-size:16px;
+    line-height:1.7;
+    color:var(--text);
+}
+
+/* ===========================================================
+   OUTPUT CHART IMAGE
+   =========================================================== */
+.report-img{
+  width:100%;
+  border-radius:12px;
+  margin-top:10px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+/* ===========================================================
+   MOBILE RESPONSIVENESS
+   =========================================================== */
+@media(max-width:600px){
+    .main-container{ padding:20px; }
+    .header-title{ font-size:22px; }
+}
+/* ===== RISK & PROBABILITY BADGE STYLING ===== */
+
+.prob-badge, .risk-badge {
+  font-size: 22px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+/* Probability always blue */
+.prob-badge {
+  background: linear-gradient(90deg, #006eff, #00b7ff);
+  color: white;
+}
+
+/* Risk colors change dynamically */
+.risk-low {
+  background: linear-gradient(90deg, #1ac41a, #0c8f0c);
+  color: white;
+}
+
+.risk-high {
+  background: linear-gradient(90deg, #ff3b2e, #c40000);
+  color: white;
+}
+.risk-banner{
+    background:#ff000033;
+    color:#ff4d4d;
+    padding:14px;
+    text-align:center;
+    font-weight:900;
+    border:2px solid red;
+    border-radius:8px;
+    font-size:18px;
+    margin-bottom:18px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%{opacity:1;}
+    50%{opacity:0.4;}
+    100%{opacity:1;}
+}
+
+.prob-high {
+    color: #ff4d4d;
+    font-size:22px;
+    font-weight:900;
+    text-shadow:0 0 10px red;
+}

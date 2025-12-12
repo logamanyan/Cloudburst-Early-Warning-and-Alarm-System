@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>National Cloudburst Early Warning — ISRO Space Theme</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">Ministry of Science and Technology </div>
+    <div class="brand-info">
+      <div class="gov">Government of India</div>
+      <div class="app">Cloudburst Early Warning System</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-link active" href="#mapSection"><i class="ri-map-pin-line"></i> Live Map</a>
+    <a class="nav-link" href="#nodeSection"><i class="ri-fingerprint-line"></i> Node Details</a>
+    <a class="nav-link" href="#historySection"><i class="ri-line-chart-line"></i> Prediction History</a>
+    <a class="nav-link" href="#trendsSection"><i class="ri-bar-chart-line"></i> Sensor Trends</a>
+    <a href="index.html" class="nav-link"><i class="ri-dashboard-line"></i> Dashboard</a>
+    <a href="history.html" class="nav-link"><i class="ri-time-line"></i> Past History</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="status"><span class="dot online"></span> ONLINE</div>
+    <div class="version">• Code4Nation •</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR with marquee -->
+  <header class="topbar">
+    <div class="left">
+      <div class="title"> Cloudburst Early Warning Alert System</div>
+      <div class="subtitle">AI • ConvLSTM • Multi-node • Rainfall </div>
+    </div>
+<div class="marquee">
+    <div class="marquee-track" id="marqueeTrack">
+        <span id="marqueeText">Initializing cloudburst intelligence…</span>
+        <span id="marqueeTextClone"></span>
+    </div>
+</div>
+
+
+  </header>
+
+  <main class="content">
+
+    <!-- MAP SECTION -->
+    <section id="mapSection" class="section section-map">
+      <div class="card map-card">
+        <div class="card-head">
+          <h3>Satellite Map — Node Locations</h3>
+        </div>
+        <div id="map" class="map"></div>
+      </div>
+    </section>
+
+    <!-- NODE DETAILS -->
+    <section id="nodeSection" class="section section-nodes">
+      <div class="node-row">
+
+        <div class="node-card card">
+          <div class="node-title">Node 1 — Pune</div>
+          <div class="node-values">
+            <div>Temp: <span id="n1_temp">--</span> °C</div>
+            <div>Humidity: <span id="n1_hum">--</span> %</div>
+            <div>Pressure: <span id="n1_pres">--</span> hPa</div>
+            <div>Dew Point: <span id="n1_dew">--</span> °C</div>
+             <div>Cloud Cover (API): <span id="n1_cloud_ext">--</span> %</div>
+            <div>Wind Speed (API): <span id="n1_wind_speed_ext">--</span> km/h</div>
+            <div>Wind Direction (API): <span id="n1_wind_dir_ext">--</span> °</div>
+            <div>Rainfall: <span id="n1_rain">--</span> mm/hr</div>
+            <div>Cloud Base: <span id="n1_cloud_base">--</span> m</div>
+<div>Cloud Ceiling: <span id="n1_cloud_ceiling">--</span> m</div>
+<div>Visibility: <span id="n1_visibility">--</span> m</div>
+<div>Wind Gust: <span id="n1_wind_gust">--</span> m/s</div>
+<div>Altitude: <span id="n1_alt">--</span> m</div>
+
+            <div>
+  Probability:
+  <span id="n1_prob" class="prob-badge">--%</span>
+</div>
+
+<div>
+  Risk:
+  <span id="n1_risk" class="risk-badge risk-low">--</span>
+</div>
+
+          </div>
+        </div>
+
+        <div class="node-card card">
+          <div class="node-title">Node 2 — Uttarkashi</div>
+          <div class="node-values">
+            <div>Temp: <span id="n2_temp">--</span> °C</div>
+            <div>Humidity: <span id="n2_hum">--</span> %</div>
+            <div>Pressure: <span id="n2_pres">--</span> hPa</div>
+            <div>Dew Point: <span id="n2_dew">--</span> °C</div>
+            <div>Rainfall: <span id="n2_rain">--</span> mm/hr</div>
+           
+            <div>Cloud Cover (API): <span id="n2_cloud_ext">--</span> %</div>
+            <div>Wind Speed (API): <span id="n2_wind_speed_ext">--</span> km/h</div>
+            <div>Wind Direction (API): <span id="n2_wind_dir_ext">--</span> °</div>
+            <div>Cloud Base: <span id="n2_cloud_base">--</span> m</div>
+<div>Cloud Ceiling: <span id="n2_cloud_ceiling">--</span> m</div>
+<div>Visibility: <span id="n2_visibility">--</span> m</div>
+<div>Wind Gust: <span id="n2_wind_gust">--</span> m/s</div>
+<div>Altitude: <span id="n2_alt">--</span> m</div>
+
+<div>
+  Probability:
+  <span id="n2_prob" class="prob-badge">--%</span>
+</div>
+
+<div>
+  Risk:
+  <span id="n2_risk" class="risk-badge risk-low">--</span>
+</div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HISTORY + TRENDS -->
+    <section id="historySection" class="section section-charts">
+      <div class="card chart-card">
+        <h4>Cloudburst Probability — History</h4>
+        <canvas id="probChart" height="160"></canvas>
+      </div>
+
+      <div id="trendsSection" class="card chart-card">
+        <h4>Temperature · Humidity · Pressure Trends</h4>
+        <canvas id="thpChart" height="160"></canvas>
+      </div>
+    </section>
+
+    <!-- ALERTS -->
+    <section class="section">
+      <div class="card">
+        <h4>Alerts</h4>
+        <div id="alerts" class="alerts"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<audio id="alertSound">
+    <source src="alert.mp3" type="audio/mpeg">
+</audio>
+
+<div id="riskWarning" class="risk-banner" style="display:none;">
+    ⚠️ HIGH RISK: Cloudburst Detected!
+</div>
+
+
+<script src="app.js"></script>
+</body>
+</html>

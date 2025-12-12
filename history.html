@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Past Cloudburst History</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">Ministry of Science and Technology</div>
+    <div class="brand-info">
+      <div class="gov">Government of India</div>
+      <div class="app">Cloudburst Early Warning  Alert System</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-link"><i class="ri-dashboard-line"></i> Dashboard</a>
+    <a href="history.html" class="nav-link active"><i class="ri-time-line"></i> Past History</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <span class="dot online"></span> ONLINE  
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+<header class="topbar">
+  <div class="left">
+    <div class="title">Historical Cloudburst Prediction Report</div>
+    <div class="subtitle">Powered by ConvLSTM • Open-Meteo Archive • AI Weather Intelligence</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- FORM -->
+  <section class="section">
+    <div class="card" style="max-width:600px;margin:auto">
+      <h3>Analysis Parameters</h3>
+
+      <label>Latitude</label>
+      <input id="lat" class="input" type="number" step="0.0001" placeholder="Enter latitude">
+
+      <label>Longitude</label>
+      <input id="lon" class="input" type="number" step="0.0001" placeholder="Enter longitude">
+
+      <label>Start Date</label>
+      <input id="start" class="input" type="date">
+
+      <label>End Date</label>
+      <input id="end" class="input" type="date">
+
+      <button id="btnGenerate" class="btn full">Generate Prediction Report</button>
+
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section class="section">
+    <div class="card" id="summaryCard" style="display:none">
+      <h3>Prediction Summary</h3>
+      <div id="summary" class="summary-box"></div>
+    </div>
+  </section>
+
+  <!-- IMAGE REPORT -->
+  <section class="section">
+    <div class="card" id="chartCard" style="display:none">
+      <h3>Detailed Weather Breakdown</h3>
+      <img id="chartImg" class="report-img"/>
+    </div>
+  </section>
+
+</main>
+</div>
+</div>
+<audio id="alertSound">
+    <source src="alert.mp3" type="audio/mpeg">
+</audio>
+
+<div id="riskWarning" class="risk-banner" style="display:none;">
+    ⚠️ HIGH RISK: Cloudburst Detected!
+</div>
+
+<script src="history.js"></script>
+</body>
+</html>

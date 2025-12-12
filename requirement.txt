@@ -1,0 +1,8 @@
+requests
+numpy
+pandas
+matplotlib
+tensorflow==2.19.0
+joblib
+paho-mqtt
+scikit-learn
