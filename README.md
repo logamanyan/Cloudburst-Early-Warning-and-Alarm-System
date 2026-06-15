@@ -1,130 +1,141 @@
-🌧️ Overview
-The Cloudburst Early Warning System is a real-time, AI-driven multi-node weather monitoring platform designed to predict cloudburst conditions using:
-🛰 Satellite + Sensor Fusion
-🤖 ConvLSTM Deep Learning Model
-☁️ Tomorrow.io Real-time Weather API
-📡 LoRaWAN Sensor Nodes
-🔁 InfluxDB time-series storage
-🔔 Smart alerts + MQTT relay triggering
-🗺️ Live map dashboard with ISRO theme
-The system supports multiple sensor nodes—currently Node 1: Pune and Node 2: Uttarkashi.
+# 🌧️ Cloudburst Early Warning System
 
-🚀 Features
-✔ Real-time data ingestion
-Reads temperature, humidity, pressure, rainfall, wind, cloud cover, visibility, gusts from:
-Local sensors (BMP280 / LoRaWAN)
-External APIs (Tomorrow.io Weather)
+An 🤖 AI-driven, ⏱️ real-time multi-node weather monitoring platform designed to predict cloudburst conditions using 🛰️ sensor fusion and 🧠 deep learning.
 
-✔ AI-based cloudburst prediction
-Uses past 47 hours of weather history
-Runs ConvLSTM model to predict cloudburst probability
-Risk enhancement based on cloud base/ceiling, visibility & wind gusts
+---
 
-✔ Automatic risk alerts
-Dashboard alerts
-Marquee notifications
-MQTT relay activation if risk > 50%
+## 📌 Project Overview
+The system aggregates 🔌 local sensor inputs with 🌍 global weather data to run predictive models for early cloudburst warnings.
 
-✔ Full Dashboard
-Live Satellite Map (Leaflet + Google tiles)
-Node details
-Charts (probability + temperature/humidity/pressure)
-Real-time altitudes computed from pressure
-Auto-updating Marquee ticker
-✔ Data storage
-Each prediction logged into InfluxDB (predictions measurement)
+* 🛰️ **Data Fusion:** Satellite data, Tomorrow.io API, and LoRaWAN sensor nodes.
+* 🧠 **Core Engine:** ConvLSTM deep learning framework.
+* 🗺️ **Visualization:** ISRO-themed live map dashboard with real-time telemetry.
 
-🏗️ System Architecture
+Currently deployed across two critical monitoring stations: 📍 **Node 1 (Pune)** and 📍 **Node 2 (Uttarkashi)**.
+
+---
+
+## 🏗️ System Architecture
+
+```text
 +--------------------+
+
 |   LoRaWAN Nodes    |
 | (Temp/Hum/Pres)    |
 +---------+----------+
           |
           v
 +--------------------+       +---------------------+
+
 |   live2.py Backend | <-->  | Tomorrow.io Weather |
 | Flask + ML Model   |       +---------------------+
 +--------------------+
           |
           v
 +--------------------+       +--------------------+
+
 | InfluxDB (TS Data) | <---> | MQTT Broker (TLS)  |
 +--------------------+       +--------------------+
           |
           v
 +------------------------------+
+
 | Frontend Dashboard (index.js)|
 | Map • Charts • Alerts        |
 +------------------------------+
+```
 
-🧰 Requirements
-Hardware
+---
 
-Node 1 (Pune): Full sensor set
+## 🚀 Key Features
 
-Node 2 (Uttarkashi): FUll sensor set
+* 📊 **Real-Time Data Ingestion:** Collects parameters like temperature, humidity, pressure, rainfall, wind, cloud cover, visibility, and gusts from local BMP280 sensors and Tomorrow.io API.
+* 🔮 **AI-Powered Predictions:** Leverages a 47-hour historical lookback window using a ConvLSTM model to evaluate real-time risk.
+* 🚨 **Automatic Risk Mitigation:** Automatically triggers marquee UI alerts, audible alarms, and hardware relays via MQTT if risk levels breach 50%.
+* 🖥️ **Dynamic UI Canvas:** Visualizes data using Leaflet, Google map tiles, multi-parameter time-series charts, and dynamically computed altitudes.
 
-Optional: Relay device controlled via MQTT
+---
 
-Software
-Install these:
+## 📦 Folder Structure
 
-Python 3.10+
-Flask
-TensorFlow / Keras
-InfluxDB Client
-Paho MQTT
-Requests
-NumPy
-Pandas
-joblib
-⚙️ Backend Setup
-1️⃣ Install dependencies
+```text
+Cloudburst-System/
+├── backend/
+│   ├── live2.py
+│   ├── cloudburst_model_v4.keras
+│   └── cloudburst_scaler_v4.gz
+├── frontend/
+│   ├── index.html
+│   ├── app.js
+│   ├── style.css
+│   └── alert.mp3
+└── README.md
+```
+
+---
+
+## 🧰 Requirements
+
+### 🔌 Hardware
+* 📍 **Node 1 (Pune):** Primary telemetry sensor array.
+* 📍 **Node 2 (Uttarkashi):** High-altitude telemetry sensor array.
+* 🎛️ **Optional:** MQTT-compatible relay device for automation triggering.
+
+### 💻 Software
+* 🐍 Python 3.10+
+* ☁️ InfluxDB Cloud Account
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. 🖥️ Backend Deployment
+
+Navigate to the backend directory and install the necessary dependencies:
+```bash
 pip install flask flask-cors requests numpy pandas tensorflow joblib influxdb-client paho-mqtt
+```
 
-2️⃣ Place model files
-cloudburst_model_v4.keras
-cloudburst_scaler_v4.gz
+Place your trained weights and scaling parameters into the root of your `backend/` directory:
+* 🧠 `cloudburst_model_v4.keras`
+* 📐 `cloudburst_scaler_v4.gz`
 
-3️⃣ Configure credentials inside live2.py
-Edit:
-INFLUX_URL
-INFLUX_TOKEN
-MQTT_USERNAME
-MQTT_PASSWORD
-TOMORROW_KEY
+Open `live2.py` and input your environmental credentials:
+```python
+INFLUX_URL = "your_influxdb_url"
+INFLUX_TOKEN = "your_influxdb_token"
+MQTT_USERNAME = "your_mqtt_username"
+MQTT_PASSWORD = "your_mqtt_password"
+TOMORROW_KEY = "your_tomorrow_io_api_key"
+```
 
-4️⃣ Run backend
+Boot up the local Flask server:
+```bash
 python3 live2.py
+```
+*💡 The API engine will spin up on port 5003.*
 
+### 2. 🌐 Frontend Deployment
 
-Backend available at:
+Ensure the following assets reside inside your `frontend/` directory: `index.html`, `app.js`, `style.css`, and `alert.mp3`.
 
-http://localhost:5003/node/1/latest
-http://localhost:5003/node/2/latest
-
-🖥️ Frontend Setup
-1️⃣ Files needed in frontend folder:
-index.html
-app.js
-style.css
-alert.mp3
-
-2️⃣ Start any simple HTTP server:
+Spin up a simple HTTP static web server:
+```bash
 python3 -m http.server 8000
+```
+Open your browser and navigate to: `http://localhost:8000/index.html`
 
+---
 
-Then open:
+## 🔌 API Reference
 
-http://localhost:8000/index.html
-
-🔌 API Endpoints
-Get latest node readings
+### 📡 Get Latest Telemetry Metrics
+```http
 GET /node/<id>/latest
+```
 
-
-Returns:
-
+#### 📄 Response Example (`200 OK`)
+```json
 {
   "temp": 29.4,
   "humidity": 55.1,
@@ -137,99 +148,40 @@ Returns:
   "risk": 0,
   "altitude_m": 2251.4
 }
+```
 
-📡 MQTT Alerts
+### 🔔 MQTT Alert Interface
+When the AI prediction exceeds the high-risk limit (>50%), the backend transmits five redundancy messages over the following broker channel:
+* 🏷️ **Topic:** `node_id=1` (or relevant node ID)
+* 📦 **Payload:** `HIGH RISK (relay ON)`
 
-Backend publishes:
+---
 
-node_id=1   → HIGH RISK (relay ON)
+## 🧭 Production Recommendations
 
+* ⚙️ **Backend WSGI Execution:** Run production backends under a standard Linux daemon using Gunicorn:
+  ```bash
+  gunicorn --bind 0.0.0.0:5003 live2:app
+  ```
+* 🚀 **Frontend Hosting:** Deploy static UI assets directly to fast CDNs like Netlify, Vercel, or a local Nginx server instance.
 
-Published 5 times for reliability.
+---
 
-🧭 Deployment Recommendations
-✔ Run Backend on a Server (Linux)
+## 🛠️ Troubleshooting
 
-Use:
+### ❌ Node 2 Data Stream Drops Out
+* ⚠️ **Cause:** BMP280 sensors lack hardware humidity logs. Null variables halt script computations downstream.
+* ✅ **Resolution:** The backend now injects a secondary Tomorrow.io fallback structure: `sensor["humidity"] = ext.get("humidity_api") or 50.0`.
 
-gunicorn --bind 0.0.0.0:5003 live2:app
+### ❌ UI Canvas or Marquee Ticker Freeze
+* ⚠️ **Cause:** Empty values passed for structural items like dew point, pressure, or cloud base ceilings.
+* ✅ **Resolution:** The active version implements programmatic checking: `if ext[key] is None: ext[key] = 0.0`.
 
+### ❌ Missing InfluxDB Dashboards
+* 🔍 Verify your organizations, authorization tokens, and individual bucket configurations match your designated node parameters exactly.
 
-Optional: Nginx reverse proxy.
+---
 
-✔ Host Frontend on Netlify / Vercel / Nginx
-
-Just upload the static files.
-
-✔ InfluxDB Cloud Already Used (No server needed)
-🛠️ Troubleshooting
-❌ Node 2 data not updating
-
-Cause: BMP280 has no humidity → humidity becomes None → dew becomes None → frontend stops updating.
-
-Fix: Updated backend now includes:
-
-sensor["humidity"] = ext.get("humidity_api") or 50.0
-
-❌ Marquee not showing
-
-Triggered when values like dew/humidity/cloud_base are null.
-
-Updated backend includes FULL sanitization:
-
-if ext[key] is None: ext[key] = 0.0
-if dew is None: dew = 0.0
-
-❌ Charts stop updating
-
-Usually caused by:
-
-pressure = null
-
-
-Backend now guarantees no nulls.
-
-❌ Influx history empty
-
-Check:
-
-Token & org correct
-
-Bucket names match Node 1/Node 2
-
-🧪 Testing Node Data
-
-Check Node 1:
-
-curl http://localhost:5003/node/1/latest
-
-
-Check Node 2:
-
-curl http://localhost:5003/node/2/latest
-
-
-If JSON prints correctly, frontend will work.
-
-📦 Folder Structure
-Cloudburst-System/
-│
-├── backend/
-│   ├── live2.py
-│   ├── cloudburst_model_v4.keras
-│   ├── cloudburst_scaler_v4.gz
-│
-├── frontend/
-│   ├── index.html
-│   ├── app.js
-│   ├── style.css
-│   ├── alert.mp3
-│
-└── README.md
-
-🙌 Credits
-
-Developed by Logamanyan (CodeForNation)
-Built for Multi-Node Cloudburst Detection Hackathon
-
-Backend, AI Model, Frontend Dashboard — Fully Integrated Solution.
+## 🙌 Credits
+* 👨‍💻 **Lead Developer:** Logamanyan ([CodeForNation](https://github.com))
+* 🏆 **Occasion:** Built for the **Multi-Node Cloudburst Detection Hackathon**.
